@@ -1,0 +1,17 @@
+-r ./requirements.txt
+-r ./requirements_rtfd.txt
+
+cython
+codacy-coverage
+cryptography
+flake8
+ipykernel
+jupyter_client
+nbconvert
+nbformat
+pydocstyle
+pytest-cov
+pytest-flake8
+pytest-runner
+pytest>=3.5
+wheel
