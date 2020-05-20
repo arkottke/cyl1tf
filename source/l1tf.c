@@ -50,15 +50,16 @@ void   print_ivec(int n, const int *x); /* for debug */
  *              l1tf : main routine for l1 trend filtering                  *
  *                                                                          *
  ****************************************************************************/
-int l1tf(const int n, const double *y, const double lambda, double *x)
+int l1tf(const int n, const double *y, const double lambda, double *x,
+         const double maxiter, const double maxlsiter, const double tol)
 {
     /* parameters */
     const double ALPHA      = 0.01; /* linesearch parameter (0,0.5] */
     const double BETA       = 0.5;  /* linesearch parameter (0,1) */
     const double MU         = 2;    /* IPM parameter: t update */
-    const double MAXITER    = 100;   /* IPM parameter: max iter. of IPM */
-    const double MAXLSITER  = 40;   /* IPM parameter: max iter. of linesearch */
-    const double TOL        = 1e-4; /* IPM parameter: tolerance */
+    // const double MAXITER    = 200;   /* IPM parameter: max iter. of IPM */
+    // const double MAXLSITER  = 80;   /* IPM parameter: max iter. of linesearch */
+    // const double TOL        = 1e-4; /* IPM parameter: tolerance */
 
     /* dimension */
     const int    m          = n-2;  /* length of Dx */
@@ -170,7 +171,7 @@ int l1tf(const int n, const double *y, const double lambda, double *x)
     /*---------------------------------------------------------------------*
      *                          MAIN LOOP                                  *
      *---------------------------------------------------------------------*/
-    for (iters = 0; iters <= MAXITER; iters++)
+    for (iters = 0; iters <= maxiter; iters++)
     {
         double zTDDTz;
 
@@ -203,7 +204,7 @@ int l1tf(const int n, const double *y, const double lambda, double *x)
 
         /* STOPPING CRITERION */
 
-        if (gap <= TOL)
+        if (gap <= tol)
         {
             // fprintf(stderr,"Solved\n");
             F77_CALL(dcopy)(&n,y,&ione,x,&ione);
@@ -264,7 +265,7 @@ int l1tf(const int n, const double *y, const double lambda, double *x)
         F77_CALL(daxpy)(&m,&step,dmu1,&ione,mu1,&ione);
         F77_CALL(daxpy)(&m,&step,dmu2,&ione,mu2,&ione);
 
-        for (lsiters = 0; lsiters < MAXLSITER; lsiters++)
+        for (lsiters = 0; lsiters < maxlsiter; lsiters++)
         {
             int linesearch_skip;
             double diff_step;

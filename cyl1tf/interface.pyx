@@ -9,7 +9,8 @@ cimport numpy as np
 
 cdef extern from "l1tf.h":
     # Main routine for l1 trend filtering
-    int l1tf(const int n, const double *y, const double scale, double *x);
+    int l1tf(const int n, const double *y, const double scale, double *x,
+             double maxiter, double maxlsiter, double tol);
     # Utility for computingn the maximum value of lambda
     double l1tf_lambdamax(const int n, double *y);
 
@@ -19,7 +20,8 @@ def calc_max_scale(np.ndarray[double, ndim=1, mode='c']y):
     return l1tf_lambdamax(n, <double *>y.data)
 
 @cython.embedsignature(True)
-def calc_fit(np.ndarray[double, ndim=1, mode='c']y, scale=None, rel_scale=None):
+def calc_fit(np.ndarray[double, ndim=1, mode='c']y, scale=None, rel_scale=None,
+             max_iter=200, max_ls_iter=80, toler=1e-4):
     cdef int n = y.shape[0]
     cdef np.ndarray[double, ndim=1, mode='c'] x = \
             np.empty(n, dtype=np.float64)
@@ -32,5 +34,5 @@ def calc_fit(np.ndarray[double, ndim=1, mode='c']y, scale=None, rel_scale=None):
     else:
         raise NotImplementedError
 
-    l1tf(n, <double *>y.data, scale, <double *>x.data)
+    l1tf(n, <double *>y.data, scale, <double *>x.data, max_iter, max_ls_iter, toler)
     return x
