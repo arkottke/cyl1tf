@@ -25,6 +25,7 @@ setup(
     version='0.1.0',
     description='Cython implementation of L1 trend fitting.',
     long_description=readme + '\n\n' + history,
+    long_description_content_type='text/x-rst',
     author='Albert Kottke',
     author_email='albert.kottke@gmail.com',
     url='https://github.com/arkottke/cyl1tf',
