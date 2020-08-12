@@ -36,3 +36,5 @@ steps:
     coverage xml
     python-codacy-coverage -r coverage.xml
   displayName: 'Upload coverage'
+  env:
+    CODACY_PROJECT_TOKEN: $(CODACY_PROJECT_TOKEN) 
