@@ -30,9 +30,11 @@ steps:
   displayName: 'Install cyl1tf'
 - script: |
     pip install pytest pytest-azurepipelines
-    pytest
+    pytest --cov=. --cov-report=xml
   displayName: 'pytest'
 - script: |
     coverage xml
     python-codacy-coverage -r coverage.xml
   displayName: 'Upload coverage'
+  env:
+    CODACY_PROJECT_TOKEN: $(CODACY_PROJECT_TOKEN) 
