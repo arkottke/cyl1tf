@@ -2,6 +2,7 @@
 -r ./requirements_rtfd.txt
 
 cython
+coverage
 codacy-coverage
 cryptography
 flake8
