@@ -30,7 +30,7 @@ steps:
   displayName: 'Install cyl1tf'
 - script: |
     pip install pytest pytest-azurepipelines
-    pytest
+    pytest --cov=. --cov-report=xml
   displayName: 'pytest'
 - script: |
     coverage xml
