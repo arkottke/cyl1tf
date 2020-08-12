@@ -23,10 +23,17 @@ steps:
 
 - script: |
     python -m pip install --upgrade pip
-    pip install -r requirements.txt
+    pip install -r requirements_dev.txt
   displayName: 'Install dependencies'
-
+- script: |
+    python setup.py build_ext --inplace --force --define CYTHON_TRACE
+    python setup.py install
+  displayName: 'Install cyl1tf'
 - script: |
     pip install pytest pytest-azurepipelines
     pytest
   displayName: 'pytest'
+- script: |
+    coverage xml
+    python-codacy-coverage -r coverage.xml
+  displayName: 'Upload coverage'
