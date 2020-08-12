@@ -15,7 +15,7 @@ install:
 - python setup.py build_ext --inplace --force --define CYTHON_TRACE
 - python setup.py install
 script:
-- pytest
+- pytest --cov=. --cov-report=xml
 after_success:
 - coverage xml
 - python-codacy-coverage -r coverage.xml
