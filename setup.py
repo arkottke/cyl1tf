@@ -23,7 +23,7 @@ ext_modules = [
 
 setup(
     name="cyl1tf",
-    version="0.1.1",
+    version="0.1.2",
     description="Cython implementation of L1 trend fitting.",
     long_description=readme + "\n\n" + history,
     long_description_content_type="text/x-rst",
