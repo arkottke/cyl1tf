@@ -8,6 +8,7 @@ include Makefile
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 
+recursive-include source *
 recursive-include tests *
 recursive-include cyl1tf *.pyx
 recursive-include docs *.rst conf.py Makefile make.bat *.bib *.txt *.gitkeep
