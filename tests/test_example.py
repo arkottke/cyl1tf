@@ -24,7 +24,7 @@ from nbconvert.preprocessors import ExecutePreprocessor, CellExecutionError
 cwd = pathlib.Path(__file__).parent
 
 fpaths = [
-    cwd / '../example.ipynb',
+    cwd / "../example.ipynb",
 ]
 
 fpaths = sorted(fpaths)
@@ -35,7 +35,7 @@ def idfn(val):
         return val.name
 
 
-@pytest.mark.parametrize('fpath', fpaths, ids=idfn)
+@pytest.mark.parametrize("fpath", fpaths, ids=idfn)
 def test_notebook(fpath):
     """Execute each notebook."""
 
@@ -47,7 +47,7 @@ def test_notebook(fpath):
     ep = ExecutePreprocessor(timeout=600)
 
     try:
-        ep.preprocess(nb, {'metadata': {'path': fpath.parent}})
+        ep.preprocess(nb, {"metadata": {"path": fpath.parent}})
     except CellExecutionError:
         msg = 'Error executing the notebook "%s".\n\n' % fpath
         msg += 'See notebook "%s" for the traceback.' % fpath
