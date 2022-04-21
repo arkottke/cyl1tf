@@ -1,6 +1,10 @@
 History
 =======
 
+v0.1.3 (2022-04-20)
+-------------------
+- Fixed: Memory leak
+
 v0.1.2 (2021-04-13)
 -------------------
 - Increment version to prevent pypi collision
