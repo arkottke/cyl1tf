@@ -209,6 +209,26 @@ int l1tf(const int n, const double *y, const double lambda, double *x,
             // fprintf(stderr,"Solved\n");
             F77_CALL(dcopy)(&n,y,&ione,x,&ione);
             F77_CALL(daxpy)(&n,&dminusone,DTz,&ione,x,&ione);
+            
+            // Free the allocations
+            free(S);
+            free(DDTF);
+            free(DTz);
+            free(Dy);
+            free(DDTz);
+            free(z);
+            free(mu1);
+            free(mu2);
+            free(f1);
+            free(f2);
+            free(dz);
+            free(dmu1);
+            free(dmu2);
+            free(w);
+            free(rz);
+            free(tmp_m1);
+            free(tmp_m2);
+            free(IPIV);
             return(0);
         }
 
@@ -375,7 +395,12 @@ double l1tf_lambdamax(const int n, double *y)
         }
 
         F77_CALL(dgbsv)(&m,&itwo,&itwo,&ione,mat,&iseven,piv,vec,&m,&info);
-        if (info > 0) return -1.0;  /* if LU fails, return -1 */
+        if (info > 0) {
+            free(vec);
+            free(mat);
+            free(piv);
+            return -1.0;  /* if LU fails, return -1 */
+        }
     }
     maxval = 0;
     for (i = 0; i < m; i++)
