@@ -1,3 +1,4 @@
+import platform
 from setuptools import find_packages, setup, Extension
 
 import numpy as np
@@ -5,17 +6,21 @@ import numpy as np
 # Build project with:
 # python setup.py build_ext --inplace
 
-with open("README.rst") as fp:
+with open("README.rst", encoding="utf-8") as fp:
     readme = fp.read()
 
-with open("HISTORY.rst") as fp:
+with open("HISTORY.rst", encoding="utf-8") as fp:
     history = fp.read()
+
+LIBRARIES = ["blas", "lapack"]
+if platform.system() != "Windows":
+    LIBRARIES.append("m")
 
 ext_modules = [
     Extension(
         "cyl1tf.interface",
         ["cyl1tf/interface.pyx", "source/l1tf.c"],
-        libraries=["m", "blas", "lapack"],
+        libraries=LIBRARIES,
         include_dirs=["cyl1tf", "source", np.get_include()],
         extra_compile_args=["-Ofast"],
     ),
